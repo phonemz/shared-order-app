@@ -1,23 +1,29 @@
 body {
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-    max-width: 650px;
+    max-width: 700px;
     margin: 30px auto;
     padding: 0 20px;
     background-color: #fffaf0;
-    color: #222;
+    /* Warm ivory */
+    color: #4a3000;
+    /* Darker than primary for better readability */
+    box-sizing: border-box;
 }
 
 h2,
 h3 {
     color: #a35d02;
+    /* Deep tamarind primary */
 }
 
 .section {
     margin-bottom: 25px;
-    background: #fff8e1;
+    background: #fff4d1;
+    /* Soft warm cream */
     padding: 15px;
     border-radius: 10px;
-    box-shadow: 0 2px 6px #b28704;
+    box-shadow: 0 2px 6px #c2991c88;
+    /* subtle golden turmeric shadow */
 }
 
 label {
@@ -25,6 +31,8 @@ label {
     margin: 5px 10px 10px 0;
     cursor: pointer;
     font-weight: 600;
+    color: #7a4e00;
+    /* Dark warm brown */
 }
 
 input[type="checkbox"] {
@@ -38,14 +46,18 @@ input[type="number"] {
     font-size: 16px;
     font-weight: 600;
     border-radius: 5px;
-    border: 1.5px solid #aa8200;
+    border: 1.5px solid #a35d02;
+    /* deep tamarind border */
     text-align: center;
     outline-offset: 1px;
     transition: all 0.3s ease;
+    background: white;
+    color: #4a3000;
 }
 
 input[type="number"]:focus {
     border-color: #f49f05;
+    /* golden turmeric focus */
     box-shadow: 0 0 8px #f49f05aa;
 }
 
@@ -57,12 +69,20 @@ input[type="text"] {
     width: 100%;
     box-sizing: border-box;
     border-radius: 5px;
-    border: 1.5px solid #aa8200;
+    border: 1.5px solid #a35d02;
     outline-offset: 1px;
+    background: white;
+    color: #4a3000;
+}
+
+input[type="text"]:focus {
+    border-color: #f49f05;
+    box-shadow: 0 0 8px #f49f05aa;
 }
 
 button {
     background: #a35d02;
+    /* deep tamarind */
     border: none;
     color: white;
     font-weight: 700;
@@ -77,14 +97,16 @@ button {
 
 button:hover {
     background: #f49f05;
+    /* golden turmeric hover */
+    color: #4a3000;
 }
 
 .admin-view {
     margin-top: 40px;
     padding: 20px;
-    background-color: #fff8e1;
+    background-color: #fff4d1;
     border-radius: 10px;
-    box-shadow: 0 0 10px #b28704;
+    box-shadow: 0 0 10px #c2991c88;
 }
 
 #orderList,
@@ -93,6 +115,7 @@ button:hover {
     padding-left: 0;
     font-weight: 600;
     font-size: 16px;
+    color: #4a3000;
 }
 
 #orderList li,
@@ -109,6 +132,7 @@ button:hover {
 .options label {
     margin-right: 10px;
     display: inline-block;
+    color: #7a4e00;
 }
 
 .qty-group {
@@ -126,6 +150,7 @@ button:hover {
 .combo-list li {
     font-size: 15px;
     margin-bottom: 4px;
+    color: #4a3000;
 }
 
 .simple-item {
@@ -137,6 +162,7 @@ button:hover {
 
 .simple-item span {
     flex: 1;
+    color: #4a3000;
 }
 
 .quantity-control {
@@ -152,6 +178,16 @@ button:hover {
     font-size: 20px;
     line-height: 20px;
     user-select: none;
+    color: #a35d02;
+    background: transparent;
+    border: 1.5px solid #a35d02;
+    border-radius: 5px;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+.quantity-control button:hover {
+    background: #f49f05;
+    color: #4a3000;
 }
 
 /* Admin Login Section */
@@ -159,9 +195,9 @@ button:hover {
     max-width: 400px;
     margin: 40px auto;
     padding: 20px;
-    background: #fff8e1;
+    background: #fff4d1;
     border-radius: 10px;
-    box-shadow: 0 0 10px #b28704;
+    box-shadow: 0 0 10px #c2991c88;
 }
 
 #login-section input[type="text"],
@@ -170,10 +206,12 @@ button:hover {
     width: 100%;
     padding: 10px;
     margin-bottom: 12px;
-    border: 1.5px solid #aa8200;
+    border: 1.5px solid #a35d02;
     border-radius: 5px;
     font-size: 16px;
     box-sizing: border-box;
+    background: white;
+    color: #4a3000;
 }
 
 #login-section button {
@@ -191,12 +229,15 @@ button:hover {
 
 #login-section button:hover {
     background-color: #f49f05;
+    color: #4a3000;
 }
 
 #login-error {
     margin-top: 8px;
     text-align: center;
     font-weight: bold;
+    color: #d84315;
+    /* burnt orange/red for error */
 }
 
 /* --- Admin Panel Styles --- */
@@ -205,23 +246,23 @@ button:hover {
     max-width: 900px;
     margin: 40px auto;
     padding: 20px;
-    background: #f4f4f8;
-    color: #333;
+    background: #fffaf0;
+    color: #4a3000;
 }
 
 .admin-panel,
 #login-form {
-    background: #ffffff;
+    background: #fff4d1;
     border-radius: 12px;
     padding: 25px 30px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px #c2991c44;
     margin-bottom: 30px;
 }
 
 .admin-panel h2,
 .admin-panel h3,
 #login-form h2 {
-    color: #2c3e50;
+    color: #a35d02;
     margin-bottom: 15px;
 }
 
@@ -229,16 +270,18 @@ input[type="text"],
 input[type="password"] {
     padding: 10px 14px;
     font-size: 16px;
-    border: 1.5px solid #ccc;
+    border: 1.5px solid #a35d02;
     border-radius: 8px;
     width: 200px;
     margin-right: 12px;
     transition: border 0.3s ease;
+    background: white;
+    color: #4a3000;
 }
 
 input[type="text"]:focus,
 input[type="password"]:focus {
-    border-color: #3498db;
+    border-color: #f49f05;
     outline: none;
 }
 
@@ -246,7 +289,7 @@ button {
     padding: 10px 18px;
     font-size: 16px;
     font-weight: bold;
-    background: #3498db;
+    background: #a35d02;
     color: white;
     border: none;
     border-radius: 8px;
@@ -255,7 +298,8 @@ button {
 }
 
 button:hover {
-    background: #2980b9;
+    background: #f49f05;
+    color: #4a3000;
 }
 
 ul {
@@ -266,20 +310,50 @@ ul {
 li {
     padding: 12px 16px;
     margin-bottom: 10px;
-    background: #fafafa;
-    border-left: 5px solid #3498db;
+    background: #fff4d1;
+    border-left: 5px solid #a35d02;
     border-radius: 8px;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 1px 4px #c2991c44;
+    color: #4a3000;
 }
 
 #admin-orders li {
-    border-left-color: #27ae60;
+    border-left-color: #7a4e00;
+    /* darker brown */
 }
 
 #admin-totals li {
-    border-left-color: #8e44ad;
+    border-left-color: #f49f05;
+    /* golden turmeric */
 }
 
 .hidden {
     display: none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 767px) {
+    body {
+        max-width: 100%;
+        padding: 0 10px;
+        margin: 10px auto;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+
+    button {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    .qty-group {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
 }
