@@ -69,14 +69,6 @@ window.addEventListener("load", () => {
                         builder.querySelector(".combo-qty").value = 1;
                 });
         });
-
-        // Load saved orders from localStorage
-        const saved = localStorage.getItem("orders");
-        if (saved) {
-                orders = JSON.parse(saved);
-                updateOrderList();
-                updateTotals();
-        }
 });
 
 function changeQty(btn, delta) {
@@ -85,108 +77,85 @@ function changeQty(btn, delta) {
         input.value = Math.max(0, val);
 }
 
-document.getElementById("orderForm").addEventListener("submit", function (e) {
-        e.preventDefault();
+document.getElementById("orderForm").addEventListener(
+        "submit",
+        async function (e) {
+                e.preventDefault();
 
-        const nameInput = document.getElementById("username");
-        const name = nameInput.value.trim();
-        if (!name) {
-                alert("နာမည်ထည့်ပါ");
-                return;
-        }
-
-        const items = [];
-
-        document.querySelectorAll(".combo-builder").forEach((builder) => {
-                const itemName = builder.dataset.item;
-                builder.querySelectorAll("li").forEach((li) => {
-                        const options = JSON.parse(li.dataset.options);
-                        const qty = parseInt(li.dataset.qty);
-                        items.push({ item: itemName, options, quantity: qty });
-                });
-                builder.querySelector(".combo-list").innerHTML = "";
-
-                if (itemName === "လက်ဖက်ရည်") {
-                        builder.querySelectorAll("input[type=radio]").forEach(
-                                (r) => (r.checked = false)
-                        );
-                } else {
-                        builder.querySelectorAll(
-                                "input[type=checkbox]"
-                        ).forEach((c) => (c.checked = false));
+                const nameInput = document.getElementById("username");
+                const name = nameInput.value.trim();
+                if (!name) {
+                        alert("နာမည်ထည့်ပါ");
+                        return;
                 }
-                builder.querySelector(".combo-qty").value = 1;
-        });
 
-        document.querySelectorAll(".simple-item").forEach((item) => {
-                const qtyInput = item.querySelector(".quantity");
-                const qty = parseInt(qtyInput.value);
-                const itemName = item.dataset.name;
-                if (qty > 0) {
-                        items.push({
-                                item: itemName,
-                                options: [],
-                                quantity: qty,
+                const items = [];
+
+                document.querySelectorAll(".combo-builder").forEach(
+                        (builder) => {
+                                const itemName = builder.dataset.item;
+                                builder.querySelectorAll("li").forEach((li) => {
+                                        const options = JSON.parse(
+                                                li.dataset.options
+                                        );
+                                        const qty = parseInt(li.dataset.qty);
+                                        items.push({
+                                                item: itemName,
+                                                options,
+                                                quantity: qty,
+                                        });
+                                });
+                                builder.querySelector(".combo-list").innerHTML =
+                                        "";
+
+                                if (itemName === "လက်ဖက်ရည်") {
+                                        builder.querySelectorAll(
+                                                "input[type=radio]"
+                                        ).forEach((r) => (r.checked = false));
+                                } else {
+                                        builder.querySelectorAll(
+                                                "input[type=checkbox]"
+                                        ).forEach((c) => (c.checked = false));
+                                }
+                                builder.querySelector(".combo-qty").value = 1;
+                        }
+                );
+
+                document.querySelectorAll(".simple-item").forEach((item) => {
+                        const qtyInput = item.querySelector(".quantity");
+                        const qty = parseInt(qtyInput.value);
+                        const itemName = item.dataset.name;
+                        if (qty > 0) {
+                                items.push({
+                                        item: itemName,
+                                        options: [],
+                                        quantity: qty,
+                                });
+                        }
+                        qtyInput.value = 0;
+                });
+
+                if (items.length === 0) {
+                        alert("အနည်းဆုံးတစ်ခုတော့ အော်ဒါတင်ပါ");
+                        return;
+                }
+
+                try {
+                        const response = await fetch("/api/orders", {
+                                method: "POST",
+                                headers: { "Content-Type": "application/json" },
+                                body: JSON.stringify({ name, items }),
                         });
+
+                        if (response.ok) {
+                                alert("အော်ဒါတင်ပြီးပါပြီ!");
+                                nameInput.value = "";
+                                nameInput.blur();
+                        } else {
+                                alert("အော်ဒါတင်ရန် မအောင်မြင်ပါ");
+                        }
+                } catch (error) {
+                        alert("အော်ဒါတင်ရန် အဆင်မပြေပါ");
                 }
-                qtyInput.value = 0;
-        });
-
-        if (items.length === 0) {
-                alert("အနည်းဆုံးတစ်ခုတော့ အော်ဒါတင်ပါ");
-                return;
         }
-
-        orders.push({ name, items });
-        localStorage.setItem("orders", JSON.stringify(orders));
-
-        updateOrderList();
-        updateTotals();
-
-        // Clear the username input properly
-        nameInput.value = "";
-        nameInput.blur(); // remove focus from input after submit
-});
-
-function updateOrderList() {
-        const list = document.getElementById("orderList");
-        if (!list) return; // skip if admin panel not present
-
-        list.innerHTML = "";
-        orders.forEach((order) => {
-                const li = document.createElement("li");
-                const summary = order.items
-                        .map((i) =>
-                                i.options.length
-                                        ? `${i.item} (${i.options.join(
-                                                  ", "
-                                          )}) x${i.quantity}`
-                                        : `${i.item} x${i.quantity}`
-                        )
-                        .join(", ");
-                li.textContent = `${order.name}: ${summary}`;
-                list.appendChild(li);
-        });
-}
-
-function updateTotals() {
-        const totalList = document.getElementById("totals");
-        if (!totalList) return; // skip if admin panel not present
-
-        const totalMap = {};
-        orders.forEach((order) => {
-                order.items.forEach((i) => {
-                        const key = i.options.length
-                                ? `${i.item} (${i.options.join(", ")})`
-                                : i.item;
-                        totalMap[key] = (totalMap[key] || 0) + i.quantity;
-                });
-        });
-
-        totalList.innerHTML = "";
-        Object.entries(totalMap).forEach(([item, count]) => {
-                const li = document.createElement("li");
-                li.textContent = `${item}: ${count}`;
-                totalList.appendChild(li);
-        });
-}
+);

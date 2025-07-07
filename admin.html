@@ -1,30 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Food Order App - Admin</title>
-<link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin Panel</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="admin-body">
+  <h2>Admin Panel</h2>
 
-<h2>🛠️ အုပ်ချုပ်သူ အော်ဒါစာရင်း</h2>
+  <form id="login-form">
+    <input type="text" id="admin-name" placeholder="Admin Name" required />
+    <input type="password" id="admin-password" placeholder="Password" required />
+    <button type="submit">Login</button>
+  </form>
 
-<div id="passwordPrompt">
-  <label for="adminPassword">Admin Password: </label>
-  <input type="password" id="adminPassword" />
-  <button id="loginBtn">Login</button>
-  <p id="loginError" style="color: red; display: none;">Incorrect password, try again.</p>
-</div>
+  <div id="admin-panel" class="hidden">
+    <h3>📋 Orders</h3>
+    <ul id="admin-orders"></ul>
 
-<div class="admin-view" id="adminPanel" style="display: none;">
-  <h3>📦 အော်ဒါအားလုံး</h3>
-  <ul id="orderList"></ul>
+    <h3>📦 Total Quantities</h3>
+    <ul id="admin-totals"></ul>
+  </div>
 
-  <h3>📊 စုစုပေါင်း</h3>
-  <ul id="totals"></ul>
-</div>
-
-<script src="admin.js"></script>
+  <script src="admin.js"></script>
 </body>
 </html>

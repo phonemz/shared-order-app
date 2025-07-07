@@ -153,3 +153,133 @@ button:hover {
     line-height: 20px;
     user-select: none;
 }
+
+/* Admin Login Section */
+#login-section {
+    max-width: 400px;
+    margin: 40px auto;
+    padding: 20px;
+    background: #fff8e1;
+    border-radius: 10px;
+    box-shadow: 0 0 10px #b28704;
+}
+
+#login-section input[type="text"],
+#login-section input[type="password"] {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 12px;
+    border: 1.5px solid #aa8200;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+#login-section button {
+    width: 100%;
+    padding: 10px;
+    font-size: 17px;
+    background: #a35d02;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+#login-section button:hover {
+    background-color: #f49f05;
+}
+
+#login-error {
+    margin-top: 8px;
+    text-align: center;
+    font-weight: bold;
+}
+
+/* --- Admin Panel Styles --- */
+.admin-body {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+    background: #f4f4f8;
+    color: #333;
+}
+
+.admin-panel,
+#login-form {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 25px 30px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+}
+
+.admin-panel h2,
+.admin-panel h3,
+#login-form h2 {
+    color: #2c3e50;
+    margin-bottom: 15px;
+}
+
+input[type="text"],
+input[type="password"] {
+    padding: 10px 14px;
+    font-size: 16px;
+    border: 1.5px solid #ccc;
+    border-radius: 8px;
+    width: 200px;
+    margin-right: 12px;
+    transition: border 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+    border-color: #3498db;
+    outline: none;
+}
+
+button {
+    padding: 10px 18px;
+    font-size: 16px;
+    font-weight: bold;
+    background: #3498db;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+button:hover {
+    background: #2980b9;
+}
+
+ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+li {
+    padding: 12px 16px;
+    margin-bottom: 10px;
+    background: #fafafa;
+    border-left: 5px solid #3498db;
+    border-radius: 8px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+}
+
+#admin-orders li {
+    border-left-color: #27ae60;
+}
+
+#admin-totals li {
+    border-left-color: #8e44ad;
+}
+
+.hidden {
+    display: none;
+}
