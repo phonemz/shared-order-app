@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Food Order App</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h2>🍽 အော်ဒါတင်ရန်</h2>
+<form id="orderForm">
+
+  <!-- ထမင်းကြော် -->
+  <div class="section">
+    <h3>ထမင်းကြော်</h3>
+    <div class="combo-builder" data-item="ထမင်းကြော်">
+      <div class="options">
+        <label><input type="checkbox" value="ကြက်စပ်" /> ကြက်စပ်</label>
+        <label><input type="checkbox" value="အမဲနှပ်" /> အမဲနှပ်</label>
+        <label><input type="checkbox" value="အမဲကြော်" /> အမဲကြော်</label>
+        <label><input type="checkbox" value="ကြက်မွ" /> ကြက်မွ</label>
+        <label><input type="checkbox" value="ငါးဖယ်" /> ငါးဖယ်</label>
+        <label><input type="checkbox" value="ပုဇွန်ဟင်း" /> ပုဇွန်ဟင်း</label>
+        <label><input type="checkbox" value="ကြက်ဥအလုံးချက်" /> ကြက်ဥအလုံးချက်</label>
+        <label><input type="checkbox" value="ကြက်ဥကြော်" /> ကြက်ဥကြော်</label>
+        <label><input type="checkbox" value="ချဥ်ပေါင်ကြော်" /> ချဥ်ပေါင်ကြော်</label>
+      </div>
+      <div class="qty-group">
+        <label>အရေအတွက်: <input type="number" min="1" value="1" class="combo-qty" /></label>
+        <button type="button" class="add-combo">➕ ထည့်မယ်</button>
+      </div>
+      <ul class="combo-list"></ul>
+    </div>
+  </div>
+
+  <!-- အခြားများ -->
+  <div class="section">
+    <h3>အခြားများ</h3>
+    <div class="simple-item" data-name="ပဲပြုတ်"></div>
+    <div class="simple-item" data-name="စမူဆာ"></div>
+    <div class="simple-item" data-name="အီကြာကွေး"></div>
+    <div class="simple-item" data-name="ပဲပလာတာ"></div>
+  </div>
+
+<!-- လက်ဖက်ရည် -->
+<div class="section">
+  <h3>လက်ဖက်ရည်</h3>
+  <div class="combo-builder" data-item="လက်ဖက်ရည်">
+    <div class="options">
+      <label><input type="radio" name="tea-option" value="ပေါ့ဆိမ့်" /> ပေါ့ဆိမ့်</label>
+      <label><input type="radio" name="tea-option" value="ကျဆိမ့်" /> ကျဆိမ့်</label>
+      <label><input type="radio" name="tea-option" value="ပုံမှန်" /> ပုံမှန်</label>
+    </div>
+    <div class="qty-group">
+      <label>အရေအတွက်: <input type="number" min="1" value="1" class="combo-qty" /></label>
+      <button type="button" class="add-combo">➕ ထည့်မယ်</button>
+    </div>
+    <ul class="combo-list"></ul>
+  </div>
+</div>
+
+
+  <!-- ဟင်းအလွတ် -->
+  <div class="section">
+    <h3>ဟင်းအလွတ်</h3>
+    <div class="simple-item" data-name="ကြက်စပ်"></div>
+    <div class="simple-item" data-name="အမဲနှပ်"></div>
+    <div class="simple-item" data-name="အမဲကြော်"></div>
+    <div class="simple-item" data-name="ကြက်မွ"></div>
+    <div class="simple-item" data-name="ငါးဖယ်"></div>
+    <div class="simple-item" data-name="ပုဇွန်ဟင်း"></div>
+    <div class="simple-item" data-name="ကြက်ဥအလုံးချက်"></div>
+    <div class="simple-item" data-name="ကြက်ဥကြော်"></div>
+    <div class="simple-item" data-name="ချဥ်ပေါင်ကြော်"></div>
+  </div>
+
+  <input type="text" id="username" placeholder="Your Name" required />
+  <button type="submit">အော်ဒါတင်မယ်</button>
+</form>
+
+<!-- <div class="admin-view" id="adminPanel" style="display: block;">
+  <h3>📦 အော်ဒါအားလုံး</h3>
+  <ul id="orderList"></ul>
+
+  <h3>📊 စုစုပေါင်း</h3>
+  <ul id="totals"></ul>
+</div> -->
+
+
+<script src="app.js"></script>
+</body>
+</html>

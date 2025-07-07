@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Food Order App - Admin</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<h2>🛠️ အုပ်ချုပ်သူ အော်ဒါစာရင်း</h2>
+
+<div id="passwordPrompt">
+  <label for="adminPassword">Admin Password: </label>
+  <input type="password" id="adminPassword" />
+  <button id="loginBtn">Login</button>
+  <p id="loginError" style="color: red; display: none;">Incorrect password, try again.</p>
+</div>
+
+<div class="admin-view" id="adminPanel" style="display: none;">
+  <h3>📦 အော်ဒါအားလုံး</h3>
+  <ul id="orderList"></ul>
+
+  <h3>📊 စုစုပေါင်း</h3>
+  <ul id="totals"></ul>
+</div>
+
+<script src="admin.js"></script>
+</body>
+</html>
