@@ -61,12 +61,56 @@ window.addEventListener("load", () => {
                         builder.querySelector(".combo-qty").value = 1;
                 });
         });
+
+        // Create toast overlay once on page load
+        if (!document.getElementById("toast-overlay")) {
+                const overlay = document.createElement("div");
+                overlay.id = "toast-overlay";
+                Object.assign(overlay.style, {
+                        position: "fixed",
+                        top: 0,
+                        left: 0,
+                        width: "100vw",
+                        height: "100vh",
+                        backgroundColor: "rgba(0, 0, 0, 0.7)",
+                        color: "white",
+                        fontSize: "20px",
+                        fontWeight: "bold",
+                        display: "none",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        zIndex: 9999,
+                        textAlign: "center",
+                        padding: "20px",
+                        userSelect: "none",
+                        pointerEvents: "auto",
+                        lineHeight: "1.4",
+                        boxSizing: "border-box",
+                });
+                document.body.appendChild(overlay);
+        }
 });
 
 function changeQty(btn, delta) {
         const input = btn.parentElement.querySelector("input");
         let val = parseInt(input.value) + delta;
         input.value = Math.max(0, val);
+}
+
+function showToast(message) {
+        const overlay = document.getElementById("toast-overlay");
+        if (!overlay) return;
+
+        overlay.textContent = message;
+        overlay.style.display = "flex";
+
+        // Prevent scrolling
+        document.body.style.overflow = "hidden";
+
+        setTimeout(() => {
+                overlay.style.display = "none";
+                document.body.style.overflow = "";
+        }, 2000);
 }
 
 document.getElementById("orderForm").addEventListener(
@@ -138,45 +182,3 @@ document.getElementById("orderForm").addEventListener(
                 }
         }
 );
-
-function showToast(message) {
-        // Create or reuse overlay element
-        let overlay = document.getElementById("toast-overlay");
-        if (!overlay) {
-                overlay = document.createElement("div");
-                overlay.id = "toast-overlay";
-                Object.assign(overlay.style, {
-                        position: "fixed",
-                        top: 0,
-                        left: 0,
-                        width: "100vw",
-                        height: "100vh",
-                        backgroundColor: "rgba(0, 0, 0, 0.5)", // semi-transparent black
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        color: "white",
-                        fontSize: "20px",
-                        fontWeight: "bold",
-                        zIndex: 10000,
-                        opacity: 0,
-                        transition: "opacity 0.3s",
-                        pointerEvents: "auto", // block clicks
-                        userSelect: "none",
-                        textAlign: "center",
-                        padding: "20px",
-                        boxSizing: "border-box",
-                });
-                document.body.appendChild(overlay);
-        }
-        overlay.textContent = message;
-        overlay.style.opacity = 1;
-
-        // After 2 seconds, fade out and remove overlay
-        setTimeout(() => {
-                overlay.style.opacity = 0;
-                setTimeout(() => {
-                        overlay.remove();
-                }, 300);
-        }, 2000);
-}
