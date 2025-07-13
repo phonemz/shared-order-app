@@ -126,7 +126,7 @@ document.getElementById("orderForm").addEventListener(
                         });
 
                         if (res.ok) {
-                                alert("အော်ဒါတင်ပြီးပါပြီ!");
+                                showToast("အော်ဒါတင်ပြီးပါပြီ!");
                                 nameInput.value = "";
                                 nameInput.blur();
                         } else {
@@ -138,3 +138,45 @@ document.getElementById("orderForm").addEventListener(
                 }
         }
 );
+
+function showToast(message) {
+        // Create or reuse overlay element
+        let overlay = document.getElementById("toast-overlay");
+        if (!overlay) {
+                overlay = document.createElement("div");
+                overlay.id = "toast-overlay";
+                Object.assign(overlay.style, {
+                        position: "fixed",
+                        top: 0,
+                        left: 0,
+                        width: "100vw",
+                        height: "100vh",
+                        backgroundColor: "rgba(0, 0, 0, 0.5)", // semi-transparent black
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        color: "white",
+                        fontSize: "20px",
+                        fontWeight: "bold",
+                        zIndex: 10000,
+                        opacity: 0,
+                        transition: "opacity 0.3s",
+                        pointerEvents: "auto", // block clicks
+                        userSelect: "none",
+                        textAlign: "center",
+                        padding: "20px",
+                        boxSizing: "border-box",
+                });
+                document.body.appendChild(overlay);
+        }
+        overlay.textContent = message;
+        overlay.style.opacity = 1;
+
+        // After 2 seconds, fade out and remove overlay
+        setTimeout(() => {
+                overlay.style.opacity = 0;
+                setTimeout(() => {
+                        overlay.remove();
+                }, 300);
+        }, 2000);
+}
