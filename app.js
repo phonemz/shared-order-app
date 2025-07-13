@@ -1,20 +1,18 @@
-let orders = [];
-
 window.addEventListener("load", () => {
-        // Setup simple-item quantity controls
+        // Setup quantity controls for simple items
         document.querySelectorAll(".simple-item").forEach((item) => {
                 const name = item.dataset.name;
                 item.innerHTML = `
-      <span>${name}</span>
-      <div class="quantity-control">
-        <button type="button" onclick="changeQty(this, -1)">−</button>
-        <input type="number" class="quantity" value="0" min="0" />
-        <button type="button" onclick="changeQty(this, 1)">+</button>
-      </div>
-    `;
+            <span>${name}</span>
+            <div class="quantity-control">
+              <button type="button" onclick="changeQty(this, -1)">−</button>
+              <input type="number" class="quantity" value="0" min="0" />
+              <button type="button" onclick="changeQty(this, 1)">+</button>
+            </div>
+          `;
         });
 
-        // Setup add combo buttons
+        // Setup combo buttons
         document.querySelectorAll(".add-combo").forEach((button) => {
                 button.addEventListener("click", () => {
                         const builder = button.closest(".combo-builder");
@@ -38,14 +36,9 @@ window.addEventListener("load", () => {
                                 builder.querySelector(".combo-qty").value
                         );
 
-                        if (selected.length === 0) {
-                                alert("Option တစ်ခုခု ရွေးပါ");
-                                return;
-                        }
-                        if (qty <= 0) {
-                                alert("အရေအတွက်မှန်မှန်ဖြည့်ပါ");
-                                return;
-                        }
+                        if (selected.length === 0)
+                                return alert("Option တစ်ခုခု ရွေးပါ");
+                        if (qty <= 0) return alert("အရေအတွက်မှန်မှန်ဖြည့်ပါ");
 
                         const list = builder.querySelector(".combo-list");
                         const li = document.createElement("li");
@@ -57,15 +50,14 @@ window.addEventListener("load", () => {
                         li.dataset.qty = qty;
                         list.appendChild(li);
 
-                        if (itemName === "လက်ဖက်ရည်") {
-                                builder.querySelectorAll(
-                                        "input[type=radio]"
-                                ).forEach((r) => (r.checked = false));
-                        } else {
-                                builder.querySelectorAll(
-                                        "input[type=checkbox]"
-                                ).forEach((c) => (c.checked = false));
-                        }
+                        builder.querySelectorAll("input").forEach((input) => {
+                                if (
+                                        input.type === "radio" ||
+                                        input.type === "checkbox"
+                                )
+                                        input.checked = false;
+                        });
+
                         builder.querySelector(".combo-qty").value = 1;
                 });
         });
@@ -84,13 +76,11 @@ document.getElementById("orderForm").addEventListener(
 
                 const nameInput = document.getElementById("username");
                 const name = nameInput.value.trim();
-                if (!name) {
-                        alert("နာမည်ထည့်ပါ");
-                        return;
-                }
+                if (!name) return alert("နာမည်ထည့်ပါ");
 
                 const items = [];
 
+                // Collect combo items
                 document.querySelectorAll(".combo-builder").forEach(
                         (builder) => {
                                 const itemName = builder.dataset.item;
@@ -107,55 +97,44 @@ document.getElementById("orderForm").addEventListener(
                                 });
                                 builder.querySelector(".combo-list").innerHTML =
                                         "";
-
-                                if (itemName === "လက်ဖက်ရည်") {
-                                        builder.querySelectorAll(
-                                                "input[type=radio]"
-                                        ).forEach((r) => (r.checked = false));
-                                } else {
-                                        builder.querySelectorAll(
-                                                "input[type=checkbox]"
-                                        ).forEach((c) => (c.checked = false));
-                                }
                                 builder.querySelector(".combo-qty").value = 1;
                         }
                 );
 
+                // Collect simple items
                 document.querySelectorAll(".simple-item").forEach((item) => {
                         const qtyInput = item.querySelector(".quantity");
                         const qty = parseInt(qtyInput.value);
                         const itemName = item.dataset.name;
-                        if (qty > 0) {
+                        if (qty > 0)
                                 items.push({
                                         item: itemName,
                                         options: [],
                                         quantity: qty,
                                 });
-                        }
                         qtyInput.value = 0;
                 });
 
-                if (items.length === 0) {
-                        alert("အနည်းဆုံးတစ်ခုတော့ အော်ဒါတင်ပါ");
-                        return;
-                }
+                if (items.length === 0)
+                        return alert("အနည်းဆုံးတစ်ခုတော့ အော်ဒါတင်ပါ");
 
                 try {
-                        const response = await fetch("/api/orders", {
+                        const res = await fetch("/api/orders", {
                                 method: "POST",
                                 headers: { "Content-Type": "application/json" },
                                 body: JSON.stringify({ name, items }),
                         });
 
-                        if (response.ok) {
+                        if (res.ok) {
                                 alert("အော်ဒါတင်ပြီးပါပြီ!");
                                 nameInput.value = "";
                                 nameInput.blur();
                         } else {
                                 alert("အော်ဒါတင်ရန် မအောင်မြင်ပါ");
                         }
-                } catch (error) {
-                        alert("အော်ဒါတင်ရန် အဆင်မပြေပါ");
+                } catch (err) {
+                        alert("Server အဆင်မပြေတာကြောင့် အော်ဒါမတင်နိုင်ပါ");
+                        console.error(err);
                 }
         }
 );
