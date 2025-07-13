@@ -61,34 +61,6 @@ window.addEventListener("load", () => {
                         builder.querySelector(".combo-qty").value = 1;
                 });
         });
-
-        // Create toast overlay once on page load
-        if (!document.getElementById("toast-overlay")) {
-                const overlay = document.createElement("div");
-                overlay.id = "toast-overlay";
-                Object.assign(overlay.style, {
-                        position: "fixed",
-                        top: 0,
-                        left: 0,
-                        width: "100vw",
-                        height: "100vh",
-                        backgroundColor: "rgba(0, 0, 0, 0.7)",
-                        color: "white",
-                        fontSize: "20px",
-                        fontWeight: "bold",
-                        display: "none",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        zIndex: 9999,
-                        textAlign: "center",
-                        padding: "20px",
-                        userSelect: "none",
-                        pointerEvents: "auto",
-                        lineHeight: "1.4",
-                        boxSizing: "border-box",
-                });
-                document.body.appendChild(overlay);
-        }
 });
 
 function changeQty(btn, delta) {
@@ -97,30 +69,19 @@ function changeQty(btn, delta) {
         input.value = Math.max(0, val);
 }
 
-function showToast(message) {
-        const overlay = document.getElementById("toast-overlay");
-        if (!overlay) return;
-
-        overlay.textContent = message;
-        overlay.style.display = "flex";
-
-        // Prevent scrolling
-        document.body.style.overflow = "hidden";
-
-        setTimeout(() => {
-                overlay.style.display = "none";
-                document.body.style.overflow = "";
-        }, 2000);
-}
-
 document.getElementById("orderForm").addEventListener(
         "submit",
         async function (e) {
                 e.preventDefault();
 
                 const nameInput = document.getElementById("username");
+                const submitBtn = this.querySelector('button[type="submit"]');
                 const name = nameInput.value.trim();
-                if (!name) return alert("နာမည်ထည့်ပါ");
+
+                if (!name) {
+                        alert("နာမည်ထည့်ပါ");
+                        return;
+                }
 
                 const items = [];
 
@@ -159,8 +120,13 @@ document.getElementById("orderForm").addEventListener(
                         qtyInput.value = 0;
                 });
 
-                if (items.length === 0)
-                        return alert("အနည်းဆုံးတစ်ခုတော့ အော်ဒါတင်ပါ");
+                if (items.length === 0) {
+                        alert("အနည်းဆုံးတစ်ခုတော့ အော်ဒါတင်ပါ");
+                        return;
+                }
+
+                // Save original button text
+                const originalText = submitBtn.textContent;
 
                 try {
                         const res = await fetch("/api/orders", {
@@ -170,7 +136,7 @@ document.getElementById("orderForm").addEventListener(
                         });
 
                         if (res.ok) {
-                                showToast("အော်ဒါတင်ပြီးပါပြီ!");
+                                submitBtn.textContent = "အော်ဒါတင်ပြီးပါပြီ";
                                 nameInput.value = "";
                                 nameInput.blur();
                         } else {
@@ -180,5 +146,10 @@ document.getElementById("orderForm").addEventListener(
                         alert("Server အဆင်မပြေတာကြောင့် အော်ဒါမတင်နိုင်ပါ");
                         console.error(err);
                 }
+
+                // After 3 seconds, revert button text
+                setTimeout(() => {
+                        submitBtn.textContent = originalText;
+                }, 5000);
         }
 );
